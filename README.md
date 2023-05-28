@@ -5,7 +5,7 @@ BDD Automation Framework
 Site Tested: https://www.bestial.ro/  
 Methodology: Behavior-Driven Development  
   
-Librarries to Install:  
+Libraries to Install:  
 pip install -U selenium  
 pip install behave  
 pip install behave-html-formatter  
