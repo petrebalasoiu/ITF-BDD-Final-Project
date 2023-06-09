@@ -1,14 +1,10 @@
 from behave import *
 
 
-@given('the user has searched for an item')
+@given('the user is on the homepage and has searched for an item')
 def step_impl(context):
+    context.home_page.navigate_to_homepage()
     context.search_results_page.item_search()
-
-
-@when('the user clicks to search')
-def step_impl(context):
-    context.search_results_page.confirm_search()
 
 
 @then('the first page displayed contains 30 items')
@@ -18,6 +14,7 @@ def step_impl(context):
 
 @when('the user clicks on a certain item type to be filtered')
 def step_impl(context):
+    context.search_results_page.accept_cookies()
     context.search_results_page.filter_items_per_category()
 
 
@@ -26,37 +23,31 @@ def step_impl(context):
     context.search_results_page.filter_applied()
 
 
-#+1
-@when('the user clicks on the sort dropdown')
+@when('the user selects the ascending order from the dropdown menu')
 def step_impl(context):
-    pass
-
-
-@when('the user selects the ascending order')
-def step_impl(context):
-    pass
+    context.search_results_page.dropdown_selection_asc()
 
 
 @then('the page displays the items from the lowest to the highest price')
 def step_impl(context):
-    pass
+    context.search_results_page.items_sorted_asc()
 
 
-@when('the user selects the descending order')
+@when('the user selects the descending order from the dropdown menu')
 def step_impl(context):
-    pass
+    context.search_results_page.dropdown_selection_des()
 
 
 @then('the page displays the items from the highest to the lowest price')
 def step_impl(context):
-    pass
+    context.search_results_page.items_sorted_des()
 
 
 @when('the user clicks on the filter reset button')
 def step_impl(context):
-    pass
+    context.search_results_page.reset_filters()
 
 
 @then('all the filters are removed and the page refreshes with the original search')
 def step_impl(context):
-    pass
+    context.search_results_page.filters_reset()

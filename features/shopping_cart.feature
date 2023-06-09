@@ -2,7 +2,6 @@ Feature: Verify the shopping cart and wishlist functionality
   Background:
     Given the user has searched for a band name
 
-
   Scenario: Verify that the user can add items in the cart
     When the user clicks to add one item into the cart
     When the user clicks view the cart

@@ -70,4 +70,3 @@ def step_impl(context):
 @then('the items matching the search are presented to the user and displayed in the page source')
 def step_impl(context):
     context.home_page.assert_search_functionality()
-
