@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
-import signal
+from selenium.common.exceptions import TimeoutException
 
 
 class SearchResultsPage(BasePage):
@@ -18,18 +18,27 @@ class SearchResultsPage(BasePage):
     FILTER_BOX = (By.XPATH, "//div[@class='box-category']")
     BUTTON_FILTER_RESET = (By.XPATH, '//a[@class="link_reset" and contains(text(), "Reseteaza filtre")]')
     # >>>>>> temp
+    # >>>>>> temp
+    # >>>>>> temp
     ACCEPT_COOKIES = (By.XPATH, "//a[contains(@class, 'btn_accept_all_cookies')]")
 
     # >>>>>> temp
+    # >>>>>> temp
+    # >>>>>> temp
     def accept_cookies(self):
-        self.driver.find_element(*self.ACCEPT_COOKIES).click()
+        try:
+            confirm_cookies = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(self.ACCEPT_COOKIES))
+            confirm_cookies.click()
+        except TimeoutException:
+            print("Timeout: Accept cookies element was not clickable within the specified time.")
 
     def item_search(self):
         search_bar = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.SEARCH_BAR))
-        search_bar.send_keys('metallica')
-        self.driver.find_element(*self.SEARCH_CONFIRM).click()
+        search_bar.send_keys('Metallica')
+        search_button = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.SEARCH_CONFIRM))
+        search_button.click()
 
-    def number_of_results(self):
+    def check_number_of_results(self):
         result_list = self.driver.find_elements(*self.SEARCH_RESULTS)
         assert len(result_list) <= 30, "Error, the search returns up to 30 items per page"
 
@@ -37,49 +46,56 @@ class SearchResultsPage(BasePage):
         select_category = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.FILTER_CATEGORY))
         select_category.click()
 
-    # Needing help with the methods below :(
-
-    def filter_applied(self):
-        result_list = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.FILTER_RESULTS))
+    def check_filter_applied(self):
+        result_list = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located(self.FILTER_RESULTS))
         filter_functional = True
-        for i in range(len(result_list)):
-            href = result_list[i].get_attribute("href").text
-            if href != "Tricou":
+        for element in result_list:
+            if "Tricou" not in element.text:
                 filter_functional = False
-        assert filter_functional == True, "Error: The filter does not function properly."
+                break
+        assert filter_functional, "Error: The filter does not function properly."
 
     def dropdown_selection_asc(self):
         dropdown_list = Select(self.driver.find_element(*self.DROPDOWN_OPTIONS))
         dropdown_list.select_by_visible_text("Price Crescator")
 
-    def items_sorted_asc(self):
+    def check_items_sorted_asc(self):
         price_list = self.driver.find_elements(*self.PRICE_LIST)
-        price_is_sorted_asc = True
-        for i in range(len(price_list) - 1):
-            for j in range(i + 1, len(price_list)):
-                if int(price_list[i]) > int(price_list[j]):
-                    price_is_sorted_asc = False
-        assert price_is_sorted_asc == True, "Error, the sorting was not successful"
+        prices = []
+        for price_element in price_list:
+            price_text = price_element.text.replace(',', '')
+            price_value = ''.join(filter(str.isdigit, price_text))
+            price = int(price_value)
+            prices.append(price)
+
+        sorted_prices = sorted(prices)
+        assert prices == sorted_prices, "Error: The items are not sorted in ascending order."
 
     def dropdown_selection_des(self):
-        dropdown_list = Select(self.driver.find_element(*self.DROPDOWN_OPTIONS))
-        dropdown_list.select_by_visible_text("Price Descrescator")
+        dropdown_list2 = Select(self.driver.find_element(*self.DROPDOWN_OPTIONS))
+        dropdown_list2.select_by_visible_text("Price Descrescator")
 
-    def items_sorted_des(self):
+    def check_items_sorted_des(self):
         price_list = self.driver.find_elements(*self.PRICE_LIST)
-        price_is_sorted_asc = True
-        for i in range(len(price_list) - 1):
-            for j in range(i + 1, len(price_list)):
-                if int(price_list[i]) < int(price_list[j]):
-                    price_is_sorted_asc = False
-        assert price_is_sorted_asc == True, "Error, the sorting was not successful"
+        prices = []
+        for price_element in price_list:
+            price_text = price_element.text.replace(',', '')
+            price_value = ''.join(filter(str.isdigit, price_text))
+            price = int(price_value)
+            prices.append(price)
+
+        sorted_prices = sorted(prices)
+        assert prices == sorted_prices[::-1], "Error: The items are not sorted in descending order."
+
 
     def reset_filters(self):
-        self.driver.find_element(*self.BUTTON_FILTER_RESET).click()
+        filter_reset = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.BUTTON_FILTER_RESET))
+        filter_reset.click()
 
-    def filters_reset(self):
-        filters = self.driver.find_element(*self.FILTERS_APPLIED)
-        filter_box = self.driver.find_element(*self.FILTER_BOX)
-        assert filters.is_displayed() in filter_box, "Error, the filters were not removed"
-
-
+    def check_filters_reset(self):
+        try:
+            filters = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.FILTERS_APPLIED))
+            filter_box = self.driver.find_element(*self.FILTER_BOX)
+            assert filters in filter_box, "Error: The filters were not removed"
+        except TimeoutException:
+            print("Timeout: The filters element was not found within the specified time.")

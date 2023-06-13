@@ -8,7 +8,7 @@ def step_impl(context):
 
 @then('the home page title matches')
 def step_impl(context):
-    context.home_page.assert_page_title()
+    context.home_page.check_page_title()
 
 
 @when('the user clicks on the logo button')
@@ -19,7 +19,7 @@ def step_impl(context):
 # +1
 @then('the user is redirected to the home page')
 def step_impl(context):
-    context.home_page.assert_home_page()
+    context.home_page.check_home_page()
 
 
 @when('the user clicks on the "Home" button')
@@ -34,7 +34,7 @@ def step_impl(context):
 
 @then('the user is redirected to the "Produse noi" page')
 def step_impl(context):
-    context.home_page.assert_new_products_page()
+    context.home_page.check_new_products_page()
 
 
 @when('the user clicks on the "Producatori" button')
@@ -44,7 +44,7 @@ def step_impl(context):
 
 @then('the user is redirected to the "Producatori" page')
 def step_impl(context):
-    context.home_page.assert_manufacturers_page()
+    context.home_page.check_manufacturers_page()
 
 
 @when('the user clicks on the "Contact" button')
@@ -54,7 +54,7 @@ def step_impl(context):
 
 @then('the user is redirected to the "Contact" page')
 def step_impl(context):
-    context.home_page.assert_contact_page()
+    context.home_page.check_contact_page()
 
 
 @when('the user types a product name in the search bar')
@@ -69,4 +69,4 @@ def step_impl(context):
 
 @then('the items matching the search are presented to the user and displayed in the page source')
 def step_impl(context):
-    context.home_page.assert_search_functionality()
+    context.home_page.check_search_functionality()

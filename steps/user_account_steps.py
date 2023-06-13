@@ -19,22 +19,22 @@ def step_impl(context):
 
 @then('the user is successfully logged into the account')
 def step_impl(context):
-    context.user_account_page.assert_login_with_logout()
+    context.user_account_page.check_login_and_logout()
 
 
 @then('the user is prompted with the "Invalid password" and cannot log into the application')
 def step_impl(context):
-    context.user_account_page.invalid_password_error()
+    context.user_account_page.check_invalid_password_error()
 
 
 @then('the user is prompted with the "Invalid username" and cannot log into the application')
 def step_impl(context):
-    context.user_account_page.invalid_username_error()
+    context.user_account_page.check_invalid_username_error()
 
 
 @then('the user is prompted with the "Invalid username" error and cannot log into the application')
 def step_impl(context):
-    context.user_account_page.invalid_username_error2()
+    context.user_account_page.check_invalid_username_error2()
 
 
 @when('the user inserts only the username and not the password')

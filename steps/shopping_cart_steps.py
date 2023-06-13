@@ -20,7 +20,7 @@ def step_impl(context):
 
 @then('the item has been added to the user\'s cart')
 def step_impl(context):
-    context.shopping_cart_page.item_added_to_cart()
+    context.shopping_cart_page.check_item_added_to_cart()
 
 
 @when('the user clicks to remove the item from the shopping cart')
@@ -30,7 +30,7 @@ def step_impl(context):
 
 @then('the item has been removed from the user\'s cart')
 def step_impl(context):
-    context.shopping_cart_page.item_removed_from_cart()
+    context.shopping_cart_page.check_item_removed_from_cart()
 
 
 @when('the user clicks to add one item to the Wishlist')
@@ -45,7 +45,7 @@ def step_impl(context):
 
 @then('the item has been added to the user\'s Wishlist')
 def step_impl(context):
-    context.shopping_cart_page.item_added_to_wishlist()
+    context.shopping_cart_page.check_item_added_to_wishlist()
 
 
 @when('the user clicks to remove the item from the Wishlist')
@@ -55,4 +55,4 @@ def step_impl(context):
 
 @then('the item has been removed from the user\'s Wishlist')
 def step_impl(context):
-    context.shopping_cart_page.item_removed_from_wishlist()
+    context.shopping_cart_page.check_item_removed_from_wishlist()

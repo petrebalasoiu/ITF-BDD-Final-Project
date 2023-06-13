@@ -9,7 +9,7 @@ def step_impl(context):
 
 @then('the first page displayed contains 30 items')
 def step_impl(context):
-    context.search_results_page.number_of_results()
+    context.search_results_page.check_number_of_results()
 
 
 @when('the user clicks on a certain item type to be filtered')
@@ -20,7 +20,7 @@ def step_impl(context):
 
 @then('the page displays only filtered items')
 def step_impl(context):
-    context.search_results_page.filter_applied()
+    context.search_results_page.check_filter_applied()
 
 
 @when('the user selects the ascending order from the dropdown menu')
@@ -30,7 +30,7 @@ def step_impl(context):
 
 @then('the page displays the items from the lowest to the highest price')
 def step_impl(context):
-    context.search_results_page.items_sorted_asc()
+    context.search_results_page.check_items_sorted_asc()
 
 
 @when('the user selects the descending order from the dropdown menu')
@@ -40,7 +40,7 @@ def step_impl(context):
 
 @then('the page displays the items from the highest to the lowest price')
 def step_impl(context):
-    context.search_results_page.items_sorted_des()
+    context.search_results_page.check_items_sorted_des()
 
 
 @when('the user clicks on the filter reset button')
@@ -50,4 +50,4 @@ def step_impl(context):
 
 @then('all the filters are removed and the page refreshes with the original search')
 def step_impl(context):
-    context.search_results_page.filters_reset()
+    context.search_results_page.check_filters_reset()

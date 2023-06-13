@@ -30,7 +30,7 @@ class UserAccountPage(BasePage):
         login_button = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.BUTTON_LOGIN))
         login_button.click()
 
-    def assert_login_with_logout(self):
+    def check_login_and_logout(self):
         user_login_confirmation = self.driver.find_element(*self.LOGIN_CONFIRMED)
         assert user_login_confirmation.is_displayed(), 'Login unsuccessful'
         my_account = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.BUTTON_MY_ACCOUNT))
@@ -38,14 +38,14 @@ class UserAccountPage(BasePage):
         user_logout = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.BUTTON_LOGOUT))
         user_logout.click()
 
-    def invalid_username_error(self):
+    def check_invalid_username_error(self):
         invalid_username = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.ERROR_USERNAME1))
         assert invalid_username.is_displayed(), 'Login successful'
 
-    def invalid_username_error2(self):
+    def check_invalid_username_error2(self):
         invalid_username = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.ERROR_USERNAME2))
         assert invalid_username.is_displayed(), 'Login successful'
 
-    def invalid_password_error(self):
+    def check_invalid_password_error(self):
         invalid_password = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.ERROR_PASSWORD))
         assert invalid_password.is_displayed(), 'Login successful'
