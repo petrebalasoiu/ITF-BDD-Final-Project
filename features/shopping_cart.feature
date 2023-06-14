@@ -1,37 +1,28 @@
-@F4 @UserAccount
-Feature: Verify the user login functionality
+@F3 @ShoppingCart
+Feature: Verify the shopping cart and wishlist functionality
   Background:
-    Given the user is on the login page
+    Given the user has searched for a band name
 
-  @17 @UI @login @validCredentials
-  Scenario Outline: Verify that the user can log in when inserting valid credentials
-    When the user inserts username "<username>" and password "<password>"
-    When the user clicks on the login button
-    Then the user is successfully logged into the account
-    Examples:
-      | username   | password |  |
-      | test.user1 | test     |  |
-      | test.user2 | test     |  |
-      | test.user3 | test     |  |
+  @T13 @UI @cart @addItem
+  Scenario: Verify that the user can add items in the cart
+    When the user clicks to add one item into the cart
+    When the user clicks view the cart
+    Then the item has been added to the user's cart
 
-  @18 @UI @login @invalidCredentials
-  Scenario Outline: Verify that the user cannot log in and is prompted with an error when inserting invalid credentials
-    When the user inserts username "<username>" and password "<password>"
-    When the user clicks on the login button
-    Then the user is prompted with the "<error_message>" and cannot log into the application
-    Examples:
-      | username          | password          | error_message     |
-      | test.user1        | invalid_password  | Invalid password  |
-      | invalid_username  | test              | Invalid username  |
+  @T14 @UI @cart @removeItem
+  Scenario: Verify that the user can remove items from the cart
+    When the user clicks view the cart
+    When the user clicks to remove the item from the shopping cart
+    Then the item has been removed from the user's cart
 
-  @19 @UI @login @missingPassword
-  Scenario: Verify that the user cannot log in and is prompted with an error when inserting only the username
-    When the user inserts only the username and not the password
-    When the user clicks on the login button
-    Then the user is prompted with the "Invalid password" and cannot log into the application
+  @T15 @UI @wishlist @addItem
+  Scenario: Verify that the user can add items to the wishlist
+    When the user clicks to add one item to the Wishlist
+    When the user clicks to view the Wishlist
+    Then the item has been added to the user's Wishlist
 
-  @20 @UI @login @missingUsername
-  Scenario: Verify that the user cannot log in and is prompted with an error when inserting only the password
-    When the user inserts only the password and not the username
-    When the user clicks on the login button
-    Then the user is prompted with the "Invalid username" error and cannot log into the application
+  @T16 @UI @wishlist @removeItem
+  Scenario: Verify that the user can remove items from the wishlist without being logged in
+    When the user clicks to view the Wishlist
+    When the user clicks to remove the item from the Wishlist
+    Then the item has been removed from the user's Wishlist
