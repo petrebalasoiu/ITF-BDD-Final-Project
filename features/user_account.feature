@@ -36,6 +36,3 @@ Feature: Verify the user login functionality
     Then the user is prompted with the "Invalid username" error and cannot log into the application
 
 
-
-
-
