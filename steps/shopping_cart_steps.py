@@ -6,7 +6,6 @@ def step_impl(context):
     context.shopping_cart_page.new_url_after_search()
 
 
-# +1
 @when('the user clicks to add one item into the cart')
 def step_impl(context):
     context.shopping_cart_page.add_item_to_cart()
@@ -15,7 +14,6 @@ def step_impl(context):
 @when('the user clicks view the cart')
 def step_impl(context):
     context.shopping_cart_page.open_shopping_cart()
-
 
 
 @then('the item has been added to the user\'s cart')

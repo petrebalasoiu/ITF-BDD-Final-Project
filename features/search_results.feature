@@ -1,4 +1,3 @@
-@F2 @SearchResults
 Feature: Verify that the search results are displayed and can be filtered
   Background:
     Given the user is on the homepage and has searched for an item

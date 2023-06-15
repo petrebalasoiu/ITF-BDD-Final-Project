@@ -3,7 +3,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
-from selenium.common.exceptions import TimeoutException
+from selenium.common import TimeoutException
+
 
 
 class SearchResultsPage(BasePage):
@@ -17,34 +18,22 @@ class SearchResultsPage(BasePage):
     FILTERS_APPLIED = (By.XPATH, "//a[@class='link_reset']")
     FILTER_BOX = (By.XPATH, "//div[@class='box-category']")
     BUTTON_FILTER_RESET = (By.XPATH, '//a[@class="link_reset" and contains(text(), "Reseteaza filtre")]')
-    # >>>>>> temp
-    # >>>>>> temp
-    # >>>>>> temp
-    ACCEPT_COOKIES = (By.XPATH, "//a[contains(@class, 'btn_accept_all_cookies')]")
 
-    # >>>>>> temp
-    # >>>>>> temp
-    # >>>>>> temp
+
     def accept_cookies(self):
-        try:
-            confirm_cookies = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(self.ACCEPT_COOKIES))
-            confirm_cookies.click()
-        except TimeoutException:
-            print("Timeout: Accept cookies element was not clickable within the specified time.")
+        self.accept_cookies_now()
 
     def item_search(self):
         search_bar = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.SEARCH_BAR))
         search_bar.send_keys('Metallica')
-        search_button = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.SEARCH_CONFIRM))
-        search_button.click()
+        self.wait_and_click_element_by_selector(*self.SEARCH_CONFIRM)
 
     def check_number_of_results(self):
         result_list = self.driver.find_elements(*self.SEARCH_RESULTS)
         assert len(result_list) <= 30, "Error, the search returns up to 30 items per page"
 
     def filter_items_per_category(self):
-        select_category = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.FILTER_CATEGORY))
-        select_category.click()
+        self.wait_and_click_element_by_selector(*self.FILTER_CATEGORY)
 
     def check_filter_applied(self):
         result_list = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located(self.FILTER_RESULTS))
@@ -87,10 +76,8 @@ class SearchResultsPage(BasePage):
         sorted_prices = sorted(prices)
         assert prices == sorted_prices[::-1], "Error: The items are not sorted in descending order."
 
-
     def reset_filters(self):
-        filter_reset = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.BUTTON_FILTER_RESET))
-        filter_reset.click()
+        self.wait_and_click_element_by_selector(*self.BUTTON_FILTER_RESET)
 
     def check_filters_reset(self):
         try:

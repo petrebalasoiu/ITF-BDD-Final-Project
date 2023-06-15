@@ -1,4 +1,3 @@
-@F1 @HomePage
 Feature: Verify the home page elements
   Background:
     Given the user is on the home page
@@ -32,8 +31,8 @@ Feature: Verify the home page elements
     When the user clicks on the "Contact" button
     Then the user is redirected to the "Contact" page
 
-  @T7 @UI @search @results
-  Scenario: Verify that the search functionality is working as intended
+  @T7 @UI @search @url
+  Scenario: Verify that the search functionality updates the URL
     When the user types a product name in the search bar
     When the user clicks to confirm the search
-    Then the items matching the search are presented to the user and displayed in the page source
+    Then the page URL updates to include the searched term

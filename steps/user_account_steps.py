@@ -19,7 +19,8 @@ def step_impl(context):
 
 @then('the user is successfully logged into the account')
 def step_impl(context):
-    context.user_account_page.check_login_and_logout()
+    context.user_account_page.check_login()
+    context.user_account_page.user_logout()
 
 
 @then('the user is prompted with the "Invalid password" and cannot log into the application')

@@ -1,4 +1,3 @@
-@F3 @ShoppingCart
 Feature: Verify the shopping cart and wishlist functionality
   Background:
     Given the user has searched for a band name

@@ -1,65 +1,23 @@
+from selenium.common import TimeoutException
+from selenium.webdriver.common.by import By
 from browser import Browser
-
-# from selenium.webdriver.support import expected_conditions as EC
-# from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 class BasePage(Browser):
-    pass
+    ACCEPT_COOKIES = (By.XPATH, "//a[contains(@class, 'btn_accept_all_cookies')]")
 
-    # def __init__(self, driver):
-    #     self.driver = driver
-    #
-    # def find_element(self, locator):
-    #     return self.driver.find_element(*locator)
-    #
-    # def wait_for_element_visibility(self, locator, timeout=10):
-    #     WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located(locator))
-    #
-    # def wait_for_element_clickable(self, locator, timeout=10):
-    #     WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable(locator))
-    #
-    # def click_element(self, locator):
-    #     element = self.find_element(locator)
-    #     element.click()
-    #
-    # def enter_text(self, locator, text):
-    #     element = self.find_element(locator)
-    #     element.clear()
-    #     element.send_keys(text)
-    #
-    # def get_element_text(self, locator):
-    #     element = self.find_element(locator)
-    #     return element.text
-    #
-    # def exp_wait(self, selector, timeout=10):
-    #     WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable(selector))
-    #
-    #
-    # def is_element_visible(self, locator):
-    #     try:
-    #         self.wait_for_element_visibility(locator, timeout=5)
-    #         return True
-    #     except TimeoutException:
-    #         return False
-    #
-    # def is_element_present(self, locator):
-    #     elements = self.driver.find_elements(*locator)
-    #     return len(elements) > 0
-    #
-    # def get_page_title(self):
-    #     return self.driver.title
-    #
-    # def switch_to_frame(self, locator):
-    #     frame = self.find_element(locator)
-    #     self.driver.switch_to.frame(frame)
-    #
-    # def switch_to_default_content(self):
-    #     self.driver.switch_to.default_content()
-    #
-    # def take_screenshot(self, filename):
-    #     self.driver.save_screenshot(filename)
-    #
-    # def scroll_to_element(self, locator):
-    #     element = self.find_element(locator)
-    #     self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
+    def accept_cookies_now(self):
+        try:
+            confirm_cookies = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(self.ACCEPT_COOKIES))
+            confirm_cookies.click()
+        except TimeoutException:
+            print("Timeout: Accept cookies element was not clickable within the specified time.")
+
+    def wait_for_element_by_selector(self, by, selector):
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((by, selector)))
+
+    def wait_and_click_element_by_selector(self, by, selector):
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((by, selector)))
+        self.driver.find_element(by, selector).click()

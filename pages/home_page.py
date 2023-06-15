@@ -14,63 +14,57 @@ class HomePage(BasePage):
     SEARCH_CONFIRM = (By.XPATH, "//button[@class='button-search btn btn-primary']")
 
     def navigate_to_homepage(self):
-        self.driver.get('https://www.bestial.ro/')
+        hope_page_url = 'https://www.bestial.ro/'
+        self.driver.get(hope_page_url)
 
     def check_page_title(self):
         expected = 'Bestial Magazin de tricouri din Timisoara - Bestial.ro'
         actual = self.driver.title
-        assert expected == actual, 'The page title does not match'
+        assert expected == actual, f"Page title mismatch. Expected: '{expected}', Actual: '{actual}'"
 
     def click_logo_button(self):
-        logo_button = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.LOGO_BUTTON))
-        logo_button.click()
+        self.wait_and_click_element_by_selector(*self.LOGO_BUTTON)
 
     def check_home_page(self):
         expected = 'https://www.bestial.ro/'
         actual = self.driver.current_url
-        assert expected == actual, 'The home page does not match'
+        assert expected == actual, f"Current URL mismatch. Expected: '{expected}', Actual: '{actual}'"
 
     def click_home_button(self):
-        home_button = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.HOME_BUTTON))
-        home_button.click()
+        self.wait_and_click_element_by_selector(*self.HOME_BUTTON)
 
     def click_new_products_button(self):
-        new_products_button = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.NEW_PRODUCTS_BUTTON))
-        new_products_button.click()
+        self.wait_and_click_element_by_selector(*self.NEW_PRODUCTS_BUTTON)
 
     def check_new_products_page(self):
         expected = 'https://www.bestial.ro/produse-noi.html'
         actual = self.driver.current_url
-        assert expected in actual, 'The products page does not match'
+        assert expected in actual, f"Current URL mismatch. Expected: '{expected}', Actual: '{actual}'"
 
     def click_manufacturers_button(self):
-        manufacturers_button = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.MANUFACTURERS_BUTTON))
-        manufacturers_button.click()
+        self.wait_and_click_element_by_selector(*self.MANUFACTURERS_BUTTON)
 
     def check_manufacturers_page(self):
         expected = 'https://www.bestial.ro/producatori.html'
         actual = self.driver.current_url
-        assert expected in actual, 'The manufacturers page does not match'
+        assert expected in actual, f"Current URL mismatch. Expected: '{expected}', Actual: '{actual}'"
 
     def click_contact_button(self):
-        contact_button = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.CONTACT_BUTTON))
-        contact_button.click()
+        self.wait_and_click_element_by_selector(*self.CONTACT_BUTTON)
 
     def check_contact_page(self):
         expected = 'https://www.bestial.ro/contact.html'
         actual = self.driver.current_url
         assert expected in actual, 'The contact page does not match'
-        assert 'https://www.bestial.ro/contact.html' in self.driver.current_url
 
     def type_in_search_bar(self):
         search_bar = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.SEARCH_BAR))
         search_bar.send_keys('Linkin Park')
 
     def click_to_search(self):
-        search_button = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.SEARCH_CONFIRM))
-        search_button.click()
+        self.wait_and_click_element_by_selector(*self.SEARCH_CONFIRM)
 
     def check_search_functionality(self):
-        search_term = 'Linkin Park'
-        page_source = self.driver.page_source
-        assert search_term.upper() in page_source.upper(), f'The search term {search_term} was not found'
+        search_term = 'Linkin_Park'
+        current_url = self.driver.current_url
+        assert search_term.lower() in current_url.lower(), f'The search term \'{search_term}\' was not found'

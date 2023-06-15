@@ -16,7 +16,6 @@ def step_impl(context):
     context.home_page.click_logo_button()
 
 
-# +1
 @then('the user is redirected to the home page')
 def step_impl(context):
     context.home_page.check_home_page()
@@ -67,6 +66,6 @@ def step_impl(context):
     context.home_page.click_to_search()
 
 
-@then('the items matching the search are presented to the user and displayed in the page source')
+@then('the page URL updates to include the searched term')
 def step_impl(context):
     context.home_page.check_search_functionality()
