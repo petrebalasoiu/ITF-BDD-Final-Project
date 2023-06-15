@@ -64,7 +64,6 @@ class ShoppingCartPage(BasePage):
         test.accept()
         sleep(1)
 
-
     def check_item_removed_from_wishlist(self):
         removed_from_wishlist = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.ITEM_IN_WISHLIST))
         assert removed_from_wishlist.is_displayed() is False, 'The item was not removed'
