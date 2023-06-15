@@ -18,7 +18,6 @@ class SearchResultsPage(BasePage):
     FILTER_BOX = (By.XPATH, "//div[@class='box-category']")
     BUTTON_FILTER_RESET = (By.XPATH, '//a[@class="link_reset" and contains(text(), "Reseteaza filtre")]')
 
-
     def accept_cookies(self):
         self.accept_cookies_now()
 
