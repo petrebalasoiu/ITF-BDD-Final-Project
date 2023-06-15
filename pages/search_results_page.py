@@ -6,7 +6,6 @@ from selenium.webdriver.support.select import Select
 from selenium.common import TimeoutException
 
 
-
 class SearchResultsPage(BasePage):
     SEARCH_BAR = (By.XPATH, "//input[@class='autosearch-input form-control']")
     SEARCH_CONFIRM = (By.XPATH, "//button[@class='button-search btn btn-primary']")
