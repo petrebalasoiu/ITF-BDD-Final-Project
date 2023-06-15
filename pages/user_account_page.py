@@ -23,7 +23,6 @@ class UserAccountPage(BasePage):
         username_input = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.FIELD_USERNAME))
         username_input.send_keys(username)
 
-
     def insert_password(self, password="test"):
         password_input = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.FIELD_PASSWORD))
         password_input.send_keys(password)
