@@ -15,6 +15,7 @@ Libraries used for this project that require installation in the Terminal:
 - **pip install webdriver-manager**  
   
 
+
 Command required in the Terminal to run the tests and generate the report:  
 
 **behave -f html -o behave-report.html**  
