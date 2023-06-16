@@ -1,8 +1,8 @@
-from selenium.common import TimeoutException
-from selenium.webdriver.common.by import By
 from browser import Browser
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.common import TimeoutException
 
 
 class BasePage(Browser):
