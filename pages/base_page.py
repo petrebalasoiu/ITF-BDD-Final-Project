@@ -10,7 +10,7 @@ class BasePage(Browser):
 
     def accept_cookies_now(self):
         try:
-            confirm_cookies = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(self.ACCEPT_COOKIES))
+            confirm_cookies = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.ACCEPT_COOKIES))
             confirm_cookies.click()
         except TimeoutException:
             print("Timeout: Accept cookies element was not clickable within the specified time.")
